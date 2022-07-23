@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.8.9.13224",
-      "templateHash": "11441574714706848994"
+      "templateHash": "13201019113776084324"
     }
   },
   "parameters": {
@@ -19,6 +19,18 @@
     "loc": {
       "type": "string",
       "defaultValue": "krc"
+    },
+    "publishname": {
+      "type": "string",
+      "defaultValue": "junhee"
+    },
+    "publishemail": {
+      "type": "string",
+      "defaultValue": "dlwns7267@naver.com"
+    },
+    "workspaceId": {
+      "type": "string",
+      "defaultValue": "/subscriptions/b3751e05-ee1c-4464-b33c-732591e9e936/resourceGroups/rg-ocaljhh-krc/providers/Microsoft.OperationalInsights/workspaces/wrkspc-ocaljhh-krc"
     }
   },
   "variables": {
@@ -101,8 +113,10 @@
       "properties": {
         "Application_Type": "web",
         "Flow_Type": "Bluefield",
-        "IngestionMode": "ApplicationInsights",
-        "Request_Source": "rest"
+        "IngestionMode": "LogAnalytics",
+        "Request_Source": "rest",
+        "RetentionInDays": 30,
+        "WorkspaceResourceId": "[parameters('workspaceId')]"
       }
     },
     {
@@ -115,8 +129,9 @@
         "capacity": 0
       },
       "properties": {
-        "publisherName": "junhee",
-        "publisherEmail": "dlwns7267@naver.com"
+        "publisherName": "[parameters('publishname')]",
+        "publisherEmail": "[parameters('publishemail')]",
+        "restore": true
       }
     }
   ],
