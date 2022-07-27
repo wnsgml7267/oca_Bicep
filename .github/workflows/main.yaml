@@ -9,15 +9,16 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Mask output value
-      id: first
+    - name: Check secret
       shell: bash
       run: |
-        first_value="This is first value"
-        echo "::add-mask::$first_value"
-        echo "::set-output name=first_value::$first_value"
+        echo ${{ secrets.SECRET_1 }}
 
-    - name: Check output value
-      shell: bash
+    - name: Check secret
+      shell: pwsh
       run: |
-        echo "first value: ${{ steps.first.outputs.first_value }}"
+        if ("${{ secrets.SECRET_1 }}" -eq "OCA World") {
+            echo "YES!"
+        } else {
+            echo "NO!"
+        }
