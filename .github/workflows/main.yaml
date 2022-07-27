@@ -9,15 +9,15 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Set output value
+    - name: Mask output value
       id: first
       shell: bash
       run: |
         first_value="This is first value"
-        echo "::set-output name=first_value::$first_value" 
+        echo "::add-mask::$first_value"
+        echo "::set-output name=first_value::$first_value"
 
     - name: Check output value
       shell: bash
       run: |
         echo "first value: ${{ steps.first.outputs.first_value }}"
-        
