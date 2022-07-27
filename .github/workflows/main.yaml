@@ -1,20 +1,47 @@
-name: 'My First GitHub Actions'
+name: 'My First GitHub Actions Workflow'
 
-on: push
+on: push #push할 때 작동
 
+env: #변수 설정
+  WORKFLOW_LEVEL: "This is WORKFLOW level"
 jobs:
   first-job:
     name: 'First Job'
+    runs-on: windows-latest #windows,macos,ubuntu 등
 
-    runs-on: ubuntu-latest
+    env:
+      JOB_LEVEL: "This is JOB level" #job 환경변수
 
-    steps:
-    - name: Say Hello World 1
-      shell: bash
+    steps: #순서 상관없이 빌드 잡히면 돌아감
+    - name: OCA power env 1
+      shell: bash #배쉬쉘
+      env:
+        STEP_LEVEL_1: "This is STEP level 1" #steps 환경변수
       run: |
-        echo "Hello World from step 1"
+        echo "workflow level: $WORKFLOW_LEVEL"
+        echo "job level 1: $JOB_LEVEL"
+        echo "step level 1: $STEP_LEVEL_1"
+        echo "step level 1: $STEP_LEVEL_2"
+        echo "step level 1: $STEP_LEVEL_3"
 
-    - name: Say Hello World 2
-      shell: pwsh
+    - name: OCA power env 2
+      shell: pwsh #파워쉘
+      env:
+        STEP_LEVEL_2: "This is STEP level 2"      
       run: |
-        echo "Hello World from step 2"
+        echo "workflow level: $WORKFLOW_LEVEL"
+        echo "job level 1: $JOB_LEVEL"
+        echo "step level 1: $STEP_LEVEL_1"
+        echo "step level 1: $STEP_LEVEL_2"
+        echo "step level 1: $STEP_LEVEL_3"
+
+    - name: OCA power env 3
+      shell: pwsh #파워쉘
+      env:
+        STEP_LEVEL_3: "This is STEP level 3"      
+      run: |
+        echo "workflow level: $WORKFLOW_LEVEL"
+        echo "job level 1: $JOB_LEVEL"
+        echo "step level 1: $STEP_LEVEL_1"
+        echo "step level 1: $STEP_LEVEL_2"
+        echo "step level 1: $STEP_LEVEL_3"
