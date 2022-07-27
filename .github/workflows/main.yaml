@@ -1,14 +1,6 @@
 name: 'My First GitHub Actions'
 
-on:
-  push:
-    branches:
-    - main
-    tags:
-    - 'v*'
-  pull_request:
-    branches:
-    - main
+on: ['push','pull_request']
 
 jobs:
   build:
@@ -28,23 +20,23 @@ jobs:
     - name: Restore NuGet packages
       shell: bash
       run: |
-        dotnet restore ./api
+        dotnet restore ./src/FunctionApp/oca.csproj
 
     - name: Build solution
       shell: bash
       run: |
-        dotnet build ./api -c Release
+        dotnet build ./src/FunctionApp/oca.csproj -c Release
 
     - name: Create FunctionApp artifact
       shell: bash
       run: |
-        dotnet publish ./api -c Release -o ./api/bin/published
+        dotnet publish ./src/FunctionApp/oca.csproj -c Release -o ./src/FunctionApp/oca.csproj/bin/published
 
     - name: Upload FunctionApp artifact
       uses: actions/upload-artifact@v2
       with:
         name: apiapp
-        path: api/bin/published
+        path: src/FunctionApp/oca.csproj/bin/published
 
   release:
     name: Release Apps
