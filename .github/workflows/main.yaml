@@ -1,6 +1,12 @@
-name: 'My First GitHub Actions'
+name: 'Manual Release'
 
-on: ['push','pull_request']
+on:
+  workflow_dispatch:
+    inputs:
+      title:
+        type: string
+        required: true
+        description: Enter the release title
 
 jobs:
   build:
@@ -38,6 +44,7 @@ jobs:
         name: apiapp
         path: src/FunctionApp/bin/published
 
+
   release:
     name: Release Apps
     needs: build
@@ -50,7 +57,7 @@ jobs:
       with:
         name: apiapp
         path: artifacts/api
-    #소스 파일 압축
+
     - name: Zip FunctionApp artifact
       shell: bash
       run: |
@@ -59,15 +66,12 @@ jobs:
         popd
 
         mv artifacts/api/apiapp.zip artifacts/apiapp.zip
-    #자산을 자동으로 업로드, 변경 로그 생성, 시험판 처리 등 GitHub 릴리스 프로세스를 단순화
+
     - name: Release FunctionApp artifact to GitHub
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
-        #깃허브 작업토큰
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "master"
-        #pre-lease로 표시할건지
         prerelease: false
-        #해당 파일을 업로드
+        title: ${{ github.event.inputs.title }}
         files: |
           artifacts/apiapp.zip
