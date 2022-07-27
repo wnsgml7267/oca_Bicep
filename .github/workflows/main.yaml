@@ -15,7 +15,7 @@ jobs:
     - name: OCA Power first job
       shell: bash
       run: |
-        echo "Hello World from first job"
+        echo "OCA Power from first job"
 
   second-job:
     name: 'Second Job'
