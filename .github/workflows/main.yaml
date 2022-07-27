@@ -61,7 +61,7 @@ jobs:
         mv artifacts/api/apiapp.zip artifacts/apiapp.zip
     #자산을 자동으로 업로드, 변경 로그 생성, 시험판 처리 등 GitHub 릴리스 프로세스를 단순화
     - name: Release FunctionApp artifact to GitHub
-      uses: "marvinpinto/action-automatic-releases@v1.2.1"
+      uses: "marvinpinto/action-automatic-releases@v1.1.1"
       with:
         #깃허브 작업토큰
         repo_token: "${{ secrets.GIT_TOKEN }}"
