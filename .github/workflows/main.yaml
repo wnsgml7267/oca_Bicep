@@ -19,29 +19,29 @@ jobs:
         STEP_LEVEL_1: "This is STEP level 1" #steps 환경변수
       run: |
         echo "workflow level: $WORKFLOW_LEVEL"
-        echo "job level 1: $JOB_LEVEL"
+        echo "job level: $JOB_LEVEL"
         echo "step level 1: $STEP_LEVEL_1"
-        echo "step level 1: $STEP_LEVEL_2"
-        echo "step level 1: $STEP_LEVEL_3"
+        echo "step level 2: $STEP_LEVEL_2"
+        echo "step level 3: $STEP_LEVEL_3"
 
     - name: OCA power env 2
       shell: pwsh #파워쉘
       env:
         STEP_LEVEL_2: "This is STEP level 2"      
-      run: |
-        echo "workflow level: $WORKFLOW_LEVEL"
-        echo "job level 1: $JOB_LEVEL"
-        echo "step level 1: $STEP_LEVEL_1"
-        echo "step level 1: $STEP_LEVEL_2"
-        echo "step level 1: $STEP_LEVEL_3"
+      run: | #파워쉘 문법
+        echo "workflow level: $env.WORKFLOW_LEVEL" 
+        echo "job level: $env.JOB_LEVEL"
+        echo "step level 1: $env.STEP_LEVEL_1"
+        echo "step level 2: $env.STEP_LEVEL_2"
+        echo "step level 3: $env.STEP_LEVEL_3"
 
     - name: OCA power env 3
-      shell: pwsh #파워쉘
+      shell: bash
       env:
         STEP_LEVEL_3: "This is STEP level 3"      
-      run: |
-        echo "workflow level: $WORKFLOW_LEVEL"
-        echo "job level 1: $JOB_LEVEL"
-        echo "step level 1: $STEP_LEVEL_1"
-        echo "step level 1: $STEP_LEVEL_2"
-        echo "step level 1: $STEP_LEVEL_3"
+      run: | #깃허브 액션 문법
+        echo "workflow level: ${{ env.WORKFLOW_LEVEL}}"
+        echo "job level: ${{ env.JOB_LEVEL}}"
+        echo "step level 1: ${{ env.STEP_LEVEL_1}}"
+        echo "step level 2: ${{ env.STEP_LEVEL_2}}"
+        echo "step level 3: ${{ env.STEP_LEVEL_3}}"
