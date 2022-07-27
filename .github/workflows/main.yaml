@@ -36,7 +36,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: apiapp
-        path: api/bin/published
+        path: src/FunctionApp/bin/published
 
   release:
     name: Release Apps
