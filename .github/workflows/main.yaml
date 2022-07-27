@@ -2,9 +2,6 @@ name: 'My First GitHub Actions Workflow'
 
 on: push
 
-env:
-  PRESET_VALUE: "This is preset value"
-
 jobs:
   first-job:
     name: 'First Job'
@@ -12,19 +9,15 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Set env 1
+    - name: Set output value
+      id: first
       shell: bash
       run: |
-        echo "STEPSET_1='This is step1'" >> $GITHUB_ENV
+        first_value="This is first value"
+        echo "::set-output name=first_value::$first_value" 
 
-    - name: Set env2
-      shell: pwsh
-      run: |
-        echo "STEPSET_2='This is step2'" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
-
-    - name: Check env
+    - name: Check output value
       shell: bash
       run: |
-        echo "preset value: ${{ env.PRESET_VALUE }}"
-        echo "stepset  1: ${{ env.STEPSET_1 }}"
-        echo "stepset  2: ${{ env.STEPSET_2 }}"
+        echo "first value: ${{ steps.first.outputs.first_value }}"
+        
