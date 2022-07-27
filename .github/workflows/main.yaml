@@ -29,11 +29,11 @@ jobs:
       env:
         STEP_LEVEL_2: "This is STEP level 2"      
       run: | #파워쉘 문법
-        echo "workflow level: $env.WORKFLOW_LEVEL" 
-        echo "job level: $env.JOB_LEVEL"
-        echo "step level 1: $env.STEP_LEVEL_1"
-        echo "step level 2: $env.STEP_LEVEL_2"
-        echo "step level 3: $env.STEP_LEVEL_3"
+        echo "workflow level: $env:WORKFLOW_LEVEL" 
+        echo "job level: $env:JOB_LEVEL"
+        echo "step level 1: $env:STEP_LEVEL_1"
+        echo "step level 2: $env:STEP_LEVEL_2"
+        echo "step level 3: $env:STEP_LEVEL_3"
 
     - name: OCA power env 3
       shell: bash
