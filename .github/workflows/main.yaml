@@ -1,24 +1,36 @@
 name: 'My First GitHub Actions Workflow'
 
-on: push
+on: [ 'push', 'pull_request' ]
 
 jobs:
   first-job:
     name: 'First Job'
+    if: github.event_name == 'push'
 
     strategy:
       matrix:
         os: [ 'windows-latest', 'macos-latest', 'ubuntu-latest' ]
-        nodejs: ['14.x', '16.x']
+
     runs-on: ${{ matrix.os }}
 
     steps:
-    - name: 'Setup node.js version'
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.nodejs}}
-
-    - name: 'Check node.js version on ${{matrix.os}}'
+    - name: Say Hello World from ${{ matrix.os }}
       shell: bash
       run: |
-        echo "nodejs version: $(node --version)"
+        echo "Hello World on ${{ matrix.os }}"
+
+  second-job:
+    name: 'Second Job'
+    if: github.event_name == 'pull_request'
+
+    strategy:
+      matrix:
+        os: [ 'windows-latest', 'macos-latest', 'ubuntu-latest' ]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Say Hello World from ${{ matrix.os }}
+      shell: bash
+      run: |
+        echo "Hello World on ${{ matrix.os }}"
