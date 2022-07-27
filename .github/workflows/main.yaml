@@ -1,11 +1,10 @@
 name: 'My First GitHub Actions Workflow'
 
-on: [ 'push', 'pull_request' ]
+on: push
 
 jobs:
   first-job:
     name: 'First Job'
-    if: github.event_name == 'push'
 
     strategy:
       matrix:
@@ -14,23 +13,13 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - name: Say Hello World from ${{ matrix.os }}
+    - name: OCA Power from ${{ matrix.os }} 1
       shell: bash
       run: |
-        echo "Hello World on ${{ matrix.os }}"
+        echo "OCA Power on ${{ matrix.os }} 1"
 
-  second-job:
-    name: 'Second Job'
-    if: github.event_name == 'pull_request'
-
-    strategy:
-      matrix:
-        os: [ 'windows-latest', 'macos-latest', 'ubuntu-latest' ]
-
-    runs-on: ${{ matrix.os }}
-
-    steps:
-    - name: Say Hello World from ${{ matrix.os }}
+    - name: OCA Power from ${{ matrix.os }} 2
+      if: matrix.os == 'windows-latest'
       shell: bash
       run: |
-        echo "Hello World on ${{ matrix.os }}"
+        echo "OCA Power on ${{ matrix.os }} 2"
