@@ -1,0 +1,46 @@
+name: 'Continuous Integration'
+
+on:
+  workflow_call:
+    inputs:
+      artifact_name:
+        type: string
+        required: false
+        description: Name of artifact
+        default: apiapp
+
+jobs:
+  build:
+    name: Build Apps
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the repo
+      uses: actions/checkout@v2
+
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.x'
+
+    - name: Restore NuGet packages
+      shell: bash
+      run: |
+        dotnet restore ./src/FunctionApp/oca.csproj
+
+    - name: Build solution
+      shell: bash
+      run: |
+        dotnet build ./src/FunctionApp/oca.csproj -c Release
+
+    - name: Create FunctionApp artifact
+      shell: bash
+      run: |
+        dotnet publish ./src/FunctionApp -c Release -o ./src/FunctionApp/bin/published
+
+    - name: Upload FunctionApp artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ inputs.artifact_name }}
+        path: src/FunctionAp/bin/published
