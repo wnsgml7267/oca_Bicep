@@ -30,13 +30,13 @@ jobs:
     - name: Create FunctionApp artifact
       shell: bash
       run: |
-        dotnet publish ./src/FunctionApp/oca.csproj -c Release -o ./src/FunctionApp/oca.csproj/bin/published
+        dotnet publish ./api -c Release -o ./api/bin/published
 
     - name: Upload FunctionApp artifact
       uses: actions/upload-artifact@v2
       with:
         name: apiapp
-        path: src/FunctionApp/oca.csproj/bin/published
+        path: api/bin/published
 
   release:
     name: Release Apps
