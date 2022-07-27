@@ -65,6 +65,7 @@ jobs:
       with:
         #깃허브 작업토큰
         repo_token: "${{ secrets.GIT_TOKEN }}"
+        automatic_release_tag: "latest"
         #pre-lease로 표시할건지
         prerelease: false
         #해당 파일을 업로드
