@@ -1,25 +1,30 @@
 name: 'My First GitHub Actions Workflow'
 
-on: push
+on:
+  push:
+    branches:
+    - main
 
 jobs:
   first-job:
     name: 'First Job'
 
-    strategy:
-      matrix:
-        os: [ 'windows-latest', 'macos-latest', 'ubuntu-latest' ]
-
-    runs-on: ${{ matrix.os }}
+    runs-on: windows-latest
 
     steps:
-    - name: OCA Power from ${{ matrix.os }} 1
+    - name: OCA Power first job
       shell: bash
       run: |
-        echo "OCA Power on ${{ matrix.os }} 1"
+        echo "Hello World from first job"
 
-    - name: OCA Power from ${{ matrix.os }} 2
-      if: matrix.os == 'windows-latest'
+  second-job:
+    name: 'Second Job'
+    needs: first-job
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: OCA Power second job
       shell: bash
       run: |
-        echo "OCA Power on ${{ matrix.os }} 2"
+        echo "OCA Power second job"
