@@ -12,12 +12,19 @@ on:
         required: false
         description: Name of artifact
         default: apiapp
+      env:
+        type: string
+        required: false
+        description: Environment name
+        default: DEV
 
 jobs:
   release:
     name: Release Apps
 
     runs-on: ubuntu-latest
+
+    environment: ${{ inputs.env }}
 
     steps:
     - name: Download FunctionApp artifact
@@ -30,17 +37,16 @@ jobs:
       shell: bash
       run: |
         pushd artifacts/api
-        zip -qq -r ${{ inputs.artifact_name }}.zip .
+        zip -qq -r ${{ inputs.artifact_name }}-${{ inputs.env }}.zip .
         popd
 
-        mv artifacts/api/${{ inputs.artifact_name }}.zip artifacts/${{ inputs.artifact_name }}.zip
+        mv artifacts/api/${{ inputs.artifact_name }}-${{ inputs.env }}.zip artifacts/${{ inputs.artifact_name }}-${{ inputs.env }}.zip
 
     - name: Release FunctionApp artifact to GitHub
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "master"
         prerelease: false
         title: ${{ inputs.title }}
         files: |
-          artifacts/${{ inputs.artifact_name }}.zip
+          artifacts/${{ inputs.artifact_name }}-${{ inputs.env }}.zip

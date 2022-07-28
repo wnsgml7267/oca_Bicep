@@ -1,6 +1,14 @@
 name: 'My First GitHub Actions'
 
-on: ['push', 'pull_request']
+on:
+  push:
+    branches:
+    - master
+    tags:
+    - 'v*'
+  pull_request:
+    branches:
+    - master
 
 jobs:
   call_build:
@@ -8,10 +16,19 @@ jobs:
     with:
       artifact_name: apiapp
 
-  call_release:
-    uses: ./.github/workflows/cd.yaml
+  call_release_dev:
+    uses: ./.github/worlfows/cd.yaml
     needs: call_build
     with:
       title: latest
       artifact_name: apiapp
+      env: DEV
     secrets: inherit
+
+  call_release_prod:
+    uses: ./.github/worlfows/cd.yaml
+    needs: call_release_dev
+    with:
+      title: latest
+      artifact_name: apiapp
+      env: PROD
